@@ -1,21 +1,20 @@
-// Importing functions from utils.js
-import { uploadPhoto, createUser } from './utils.js';
+import { createUser, uploadPhoto } from './utils';
 
-// Async function to call uploadPhoto and createUser
-export async function asyncUploadUser() {
+const asyncUploadUser = async () => {
+  let result = {
+    photo: null,
+    user: null,
+  };
+
   try {
-    const photoResponse = await uploadPhoto();
-    const userResponse = await createUser();
-    
-    return {
-      photo: photoResponse,
-      user: userResponse,
+    result = {
+      photo: await uploadPhoto(),
+      user: await createUser(),
     };
+    return result;
   } catch (error) {
-    // If any function fails, return an empty object
-    return {
-      photo: null,
-      user: null,
-    };
+    return result;
   }
-}
+};
+
+export default asyncUploadUser
